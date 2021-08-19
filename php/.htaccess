@@ -1,0 +1,38 @@
+# BEGIN WordPress
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+</IfModule>
+# END WordPress
+
+#Options +ExecCGI
+#FCGIWrapper /usr/bin/php73-cgi .php
+#<FilesMatch \.php$>
+#     SetHandler fcgid-script
+#</FilesMatch>
+
+# IEをリダイレクトする
+SetEnvIfNoCase User-Agent "(MSIE|Trident)" ua_browser=ie
+RewriteCond %{ENV:ua_browser} ie
+RewriteRule ^.*$ https://support.microsoft.com/ja-jp/office/microsoft-edge-%e3%81%a7%e3%81%93%e3%81%ae-web-%e3%82%b5%e3%82%a4%e3%83%88%e3%82%92%e8%a1%a8%e7%a4%ba%e3%81%99%e3%82%8b%e3%81%93%e3%81%a8%e3%82%92%e3%81%8a%e5%8b%a7%e3%82%81%e3%81%97%e3%81%be%e3%81%99-160fa918-d581-4932-9e4e-1075c4713595?ui=ja-jp&rs=ja-jp&ad=jp [R,L]
+
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTP_ACCEPT} image/webp
+  RewriteCond %{SCRIPT_FILENAME}.webp -f
+  RewriteRule .(jpe?g|png|gif)$ %{SCRIPT_FILENAME}.webp [T=image/webp]
+</IfModule>
+<IfModule mod_mime.c>
+  AddType image/webp .webp
+</IfModule>
+<IfModule mod_setenvif.c>
+  SetEnvIf Request_URI "\.(jpe?g|png|gif)$" _image_request
+</IfModule>
+<IfModule mod_headers.c>
+  Header append Vary Accept env=_image_request
+</IfModule>
