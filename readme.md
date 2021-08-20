@@ -218,6 +218,6 @@ gatsby develop --port=ポート番号 --host=0.0.0.0
 これでコンテナ外からブラウザでコンテナ内の開発サーバーにアクセスできる。
 
 # Notice
-**This repository is outside of work, which I upload out of kindness.**
-
+**This repository is outside of my work in Idea.**
+**I uploaded these out of kindness.**
 **Please understand.**
