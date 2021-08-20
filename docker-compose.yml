@@ -48,11 +48,11 @@ services:
     user: webadmin
     volumes:
       # You can also mount all of your php app.
-      #- ./php/src/${HOST_NAME}/httpdocs/:/var/www/html/:cached
-
+      #- ./php/src/${REPO_NAME}/httpdocs/:/var/www/html/:cached
+      - ./php/src/${REPO_NAME}/httpdocs:/var/www/html:cached
+      #- ./php/src/${REPO_NAME}/httpdocs/cms:/var/www/html/:cached
       - ./php/config/php.ini:/usr/local/etc/php/conf.d/php.ini
       - ./php/src/${REPO_NAME}/httpdocs/index.php:/var/www/html/index.php:cached
-      - ./php/src/${REPO_NAME}/httpdocs/cms:/var/www/html/cms:cached
 
       # You can use React in php container.
       #- ./php/src/${REPO_NAME}/httpdocs/react-app:/var/www/html/react-app
