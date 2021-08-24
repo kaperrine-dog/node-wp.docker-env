@@ -56,8 +56,10 @@ RUN sudo apk --no-cache add shadow \
 
 RUN mkdir /noto && \
     wget https://noto-website.storage.googleapis.com/pkgs/NotoSansCJKjp-hinted.zip -O /noto/NotoSansCJKjp-hinted.zip
+
 WORKDIR /noto
-RUN unzip /noto/NotoSansCJKjp-hinted.zip && \
+
+RUN unzip /noto/NotoSansCJKjp-hinted.zip -d /noto/NotoSansCJKjp-hinted && \
     mkdir -p /usr/share/fonts/noto && \
     cp *.otf /usr/share/fonts/noto && \
     chmod 644 -R /usr/share/fonts/noto/ && \
