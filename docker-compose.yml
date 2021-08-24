@@ -1,0 +1,108 @@
+version: "3.7"
+services:
+  node:
+    container_name: ${CONTAINER_NAME}_node
+    build:
+      context: ./node
+      dockerfile: ./Dockerfile
+    volumes:
+      - ./node/react-html2pdf:/home/node/react-html2pdf
+      #- ./php/src/${REPO_NAME}/httpdocs/react-app:/home/node/app/react-app
+    ports:
+      - ${NODE_LOCALPORT8000}:8000
+      - ${NODE_LOCALPORT3000}:3000
+    command: ""
+    stdin_open: true
+
+  # db:
+  #   container_name: ${CONTAINER_NAME}_db
+  #   build:
+  #     context: ./mysql
+  #     dockerfile: ./Dockerfile
+  #   volumes:
+  #     - ./mysql/db_data:/var/lib/mysql
+  #     - ./mysql/mysqld_charset.cnf:/etc/mysql/conf.d/mysqld_charset.cnf
+  #   restart: always
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: root
+  #     MYSQL_DATABASE: wordpress
+  #     MYSQL_USER: wordpress
+  #     MYSQL_PASSWORD: wordpress
+
+  # wp:
+  #   container_name: ${CONTAINER_NAME}_wp
+  #   depends_on:
+  #     - db
+  #   build:
+  #     context: ./php
+  #     #      context: ./wp
+  #     dockerfile: ./Dockerfile
+  #   restart: always
+  #   environment:
+  #     WORDPRESS_DB_HOST: db:3306
+  #     WORDPRESS_DB_NAME: wordpress
+  #     WORDPRESS_DB_USER: wordpress
+  #     WORDPRESS_DB_PASSWORD: wordpress
+  #     WORDPRESS_DEBUG: 0
+  #     WORDPRESS_TABLE_PREFIX: wp_
+  #   volumes:
+  #     #- ./php/src/${HOST_NAME}/httpdocs/:/var/www/html/:cached
+  #     - ./php/config/php.ini:/usr/local/etc/php/conf.d/php.ini
+  #     #- ./php/src/${REPO_NAME}/httpdocs/react-app:/var/www/html/react-app
+  #     - ./php/src/${REPO_NAME}/httpdocs/index.php:/var/www/html/index.php:cached
+  #     #- ./php/src/${REPO_NAME}/httpdocs/cms:/var/www/html/cms:cached
+
+  #     # - ./php/src/${REPO_NAME}/httpdocs/wp-content/themes/:/var/www/html/wp-content/themes/:cached
+  #     # - ./php/src/${REPO_NAME}/httpdocs/wp-content/uploads/:/var/www/html/wp-content/uploads/:cached
+  #     # - ./php/src/${REPO_NAME}/httpdocs/wp-content/plugins/:/var/www/html/wp-content/plugins/:cached
+
+  #     - ./php/src/${REPO_NAME}/httpdocs/cms/wp-content/themes/:/var/www/html/wp-content/themes/:cached
+  #     - ./php/src/${REPO_NAME}/httpdocs/cms/wp-content/uploads:/var/www/html/wp-content/uploads:cached
+  #     - ./php/src/${REPO_NAME}/httpdocs/cms/wp-content/plugins:/var/www/html/wp-content/plugins:cached
+
+  #     #- ./php/src/${REPO_NAME}/httpdocs/.htaccess:/var/www/html/.htaccess
+  #     - ./php/wp-setup.sh:/var/www/html/wp-setup.sh
+  #     - ./php/docker-entrypoint.sh:/var/www/html/docker-entrypoint.sh
+
+  #     #if headless wp
+  #     #- ./wp/wp-setup.sh:/var/www/html/wp-setup.sh
+  #     #- ./wp/config/php.ini:/usr/local/etc/php/conf.d/php.ini
+  #     #- ./wp/themes/:/var/www/html/wp-content/themes/:cached
+  #     #- ./wp/uploads:/var/www/html/wp-content/uploads:cached
+  #     #- ./wp/.htaccess:/var/www/html/.htaccess
+
+  #   expose:
+  #     - "80"
+  #   #      - "443"
+  #   ports:
+  #     - ${WP_HTTP_LOCALPORT}:80
+  #     - ${PHP_NODE_LOCALPORT3000}:3000
+  # #      - ${WP_HTTPS_LOCALPORT}:443
+  # #    command: >
+  # #      /bin/bash docker-entrypoint.sh
+
+  # phpmyadmin:
+  #   container_name: ${CONTAINER_NAME}_phpmyadmin
+  #   image: phpmyadmin/phpmyadmin:latest
+  #   ports:
+  #     - ${PHPMYADMIN_LOCALPORT}:80
+  #   volumes:
+  #     - ./phpmyadmin/phpmyadmin-misc.ini:/usr/local/etc/php/conf.d/phpmyadmin-misc.ini
+  #   depends_on:
+  #     - db
+
+  # srdb:
+  #   container_name: ${CONTAINER_NAME}_srdb
+  #   image: kgaut/docker-search-replace-db
+  #   ports:
+  #     - ${SRDB_LOCALPORT}:80
+  #   environment:
+  #     DB_HOST: "db:3306"
+  #     DB_USER: "wordpress"
+  #     DB_PASS: "wordpress"
+  #     DB_NAME: "wordpress"
+  #   depends_on:
+  #     - db
+
+volumes:
+  db_data:
