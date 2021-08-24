@@ -20,12 +20,18 @@ RUN echo '%wheel ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers \
 #  && echo 'node:node' | chpasswd
 #USER node
 
-RUN sudo apk upgrade && apk update
-RUN sudo apk add autoconf
-RUN sudo apk --no-cache add shadow \
+RUN sudo apk --update-cache --no-cache add shadow \
+    # general
+    pkgconf \
+    less \
+    vim \
+    curl \
+    git \
+    tzdata \
     gcc \
     g++ \
     bash \
+    # dev
     musl-dev \
     autoconf \
     automake \
@@ -37,12 +43,6 @@ RUN sudo apk --no-cache add shadow \
     zlib \
     zlib-dev \
     file \
-    pkgconf \
-    less \
-    vim \
-    curl \
-    git \
-    tzdata \
     udev \
     # for using puppeteer
     chromium \
@@ -59,7 +59,7 @@ RUN mkdir /noto && \
 
 WORKDIR /noto
 
-RUN unzip /noto/NotoSansCJKjp-hinted.zip -d /noto/NotoSansCJKjp-hinted && \
+RUN unzip /noto/NotoSansCJKjp-hinted.zip -d /noto && \
     mkdir -p /usr/share/fonts/noto && \
     cp *.otf /usr/share/fonts/noto && \
     chmod 644 -R /usr/share/fonts/noto/ && \
