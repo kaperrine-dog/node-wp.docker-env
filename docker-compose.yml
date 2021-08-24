@@ -2,12 +2,11 @@ version: "3.7"
 services:
     node:
         container_name: ${CONTAINER_NAME}_node
-        shm_size: 256m
         build:
             context: ./node
             dockerfile: ./Dockerfile
-            shm_size: '1gb'
-        shm_size: '256mb'
+            shm_size: "1gb"
+        shm_size: "2gb"
         volumes:
             - ./node/passwd-html2pdf:/home/node/passwd-html2pdf
             #- ./php/src/${REPO_NAME}/httpdocs/react-app:/home/node/app/react-app
