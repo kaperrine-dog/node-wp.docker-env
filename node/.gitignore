@@ -7,4 +7,5 @@ public/
 static/admin/*.bundle.*
 .DS_Store
 yarn-error.log
-node/app/*
+**/node/app/*
+passwd-html2pdf
