@@ -32,25 +32,28 @@ RUN sudo apk --update-cache --no-cache add shadow \
     g++ \
     bash \
     # dev
-    musl-dev \
-    autoconf \
-    automake \
-    make \
-    libtool \
-    nasm \
-    tiff \
-    jpeg \
-    zlib \
-    zlib-dev \
-    file \
-    udev \
+    # musl-dev \
+    # autoconf \
+    # automake \
+    # make \
+    # libtool \
+    # nasm \
+    # tiff \
+    # jpeg \
+    # zlib \
+    # zlib-dev \
+    # file \
+    # udev \
     # for using puppeteer
     chromium \
     nss \
     freetype \
+    freetype-dev \
     harfbuzz \
     ca-certificates \
-    ttf-freefont 
+    ttf-freefont \
+    fontconfig \
+    font-noto-cjk
 # Install NotoFonts because of indicating ja_JP on node html
 
 
