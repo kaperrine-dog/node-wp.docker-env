@@ -53,7 +53,6 @@ RUN sudo apk --no-cache add shadow \
     ttf-freefont 
 # Install NotoFonts because of indicating ja_JP on node html
 
-#mkdir -p /tmp/noto
 
 RUN mkdir /noto && \
     wget https://noto-website.storage.googleapis.com/pkgs/NotoSansCJKjp-hinted.zip -O /noto/NotoSansCJKjp-hinted.zip
@@ -140,7 +139,8 @@ RUN touch /home/node/.profile && \
 WORKDIR /home/node
 
 
-RUN sudo npm i -g gatsby-cli vue-cli create-react-app firebase-tools
+RUN sudo npm i -g gatsby-cli vue-cli create-react-app firebase-tools && \
+    fc-cache -fv
 #RUN npm install --save-dev http-server \
 #    && npm install -g gatsby-cli
 
