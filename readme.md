@@ -1,3 +1,11 @@
+# Password発行の環境構築
+
+## 要求される環境
+
+- `Docker Desktop` などの`Docker`環境
+
+
+
 # WordPress x Node.js用Docker環境構築
 
 Dockerコンテナのオーケストレーションツール `Docker compose` を利用
@@ -58,7 +66,9 @@ Dockerコンテナのオーケストレーションツール `Docker compose` �
 
 
 # 使い方
+
 ## `Node.js`を使わない`WordPress`プロジェクトの場合,
+
 プロジェクトディレクトリを予め`dev.new-project.com`と作成しておき, 
 `dev.wp-docker/*`を`$ cp dev.wp-docker/* dev.new-project.com`などしてコピーする.
 

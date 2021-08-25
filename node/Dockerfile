@@ -75,9 +75,9 @@ RUN sudo apk --no-cache add fontconfig \
 RUN mkdir -p /noto && cd /noto && \
     wget https://noto-website.storage.googleapis.com/pkgs/NotoSansCJKjp-hinted.zip -O /noto/NotoSansCJKjp-hinted.zip && \
     # unpack fonts in zip
-    unzip /noto/NotoSansCJKjp-hinted.zip -d /noto && \
+    unzip -o /noto/NotoSansCJKjp-hinted.zip -d /noto && \
     wget https://noto-website-2.storage.googleapis.com/pkgs/NotoSerifCJKjp-hinted.zip -O /noto/NotoSerifCJKjp-hinted.zip && \
-    unzip /noto/NotoSerifCJKjp-hinted.zip -d /noto && \
+    unzip -o /noto/NotoSerifCJKjp-hinted.zip -d /noto && \
     mkdir -p /usr/share/fonts/noto && \
     cp *.otf /usr/share/fonts/noto && \
     chmod 755 -R /usr/share/fonts && \
