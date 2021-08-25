@@ -27,8 +27,8 @@ RUN sudo apk --update-cache --no-cache add shadow \
     curl \
     git \
     tzdata \
-    gcc \
-    g++ \
+    # gcc \
+    # g++ \
     bash \
     # dev
     # musl-dev \
@@ -50,21 +50,37 @@ RUN sudo apk --update-cache --no-cache add shadow \
     freetype-dev \
     harfbuzz \
     ca-certificates \
-    ttf-freefont \
-    fontconfig &&\
+    fontconfig \
+    font-noto-cjk && \
     # Set timezone
     cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime &&\
     apk del tzdata
 # Install NotoFonts because of indicating ja_JP on node html
 
 
-WORKDIR /noto
-RUN wget https://noto-website.storage.googleapis.com/pkgs/NotoSansCJKjp-hinted.zip -O /noto/NotoSansCJKjp-hinted.zip && \
+# 日本語対応(IPAフォントのインストール)
+# https://moji.or.jp/ipafont/ipaex00401/
+RUN sudo apk --no-cache add fontconfig \
+    && cd \
+    && wget  https://moji.or.jp/wp-content/ipafont/IPAexfont/IPAexfont00401.zip\
+    && unzip IPAexfont00401.zip \
+    && sudo mkdir -p /usr/share/fonts/ipa \
+    && sudo cp IPAexfont00401/ipaexg.ttf /usr/share/fonts/ipa \
+    && sudo cp IPAexfont00401/ipaexm.ttf /usr/share/fonts/ipa \
+    && sudo chmod 755 -R /usr/share/fonts\
+    && fc-cache -fv \
+    && rm -rf ~/IPAexfont00401
+
+# WORKDIR /noto
+RUN mkdir -p /noto && cd /noto && \
+    wget https://noto-website.storage.googleapis.com/pkgs/NotoSansCJKjp-hinted.zip -O /noto/NotoSansCJKjp-hinted.zip && \
     # unpack fonts in zip
     unzip /noto/NotoSansCJKjp-hinted.zip -d /noto && \
+    wget https://noto-website-2.storage.googleapis.com/pkgs/NotoSerifCJKjp-hinted.zip -O /noto/NotoSerifCJKjp-hinted.zip && \
+    unzip /noto/NotoSerifCJKjp-hinted.zip -d /noto && \
     mkdir -p /usr/share/fonts/noto && \
     cp *.otf /usr/share/fonts/noto && \
-    chmod 644 -R /usr/share/fonts/noto/ && \
+    chmod 755 -R /usr/share/fonts && \
     fc-cache -fv && \
     rm -rf /noto
 
