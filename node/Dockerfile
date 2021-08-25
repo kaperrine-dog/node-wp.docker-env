@@ -6,9 +6,8 @@ WORKDIR /home/node
 RUN apk add sudo
 ARG DOCKER_USER=www
 ARG DOCKER_UID=1001
-
-RUN adduser -D -u ${DOCKER_UID} -s /bin/sh -G wheel ${DOCKER_USER}
-RUN echo '%wheel ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers \
+RUN adduser -D -u ${DOCKER_UID} -s /bin/sh -G wheel ${DOCKER_USER} && \
+    echo '%wheel ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers \
     && echo "node:node" | chpasswd \
     && addgroup node wheel \
     && echo "root:root" | chpasswd
@@ -52,17 +51,17 @@ RUN sudo apk --update-cache --no-cache add shadow \
     harfbuzz \
     ca-certificates \
     ttf-freefont \
-    fontconfig \
-    font-noto-cjk
+    fontconfig &&\
+    # Set timezone
+    cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime &&\
+    apk del tzdata
 # Install NotoFonts because of indicating ja_JP on node html
 
 
-RUN mkdir /noto && \
-    wget https://noto-website.storage.googleapis.com/pkgs/NotoSansCJKjp-hinted.zip -O /noto/NotoSansCJKjp-hinted.zip
-
 WORKDIR /noto
-
-RUN unzip /noto/NotoSansCJKjp-hinted.zip -d /noto && \
+RUN wget https://noto-website.storage.googleapis.com/pkgs/NotoSansCJKjp-hinted.zip -O /noto/NotoSansCJKjp-hinted.zip && \
+    # unpack fonts in zip
+    unzip /noto/NotoSansCJKjp-hinted.zip -d /noto && \
     mkdir -p /usr/share/fonts/noto && \
     cp *.otf /usr/share/fonts/noto && \
     chmod 644 -R /usr/share/fonts/noto/ && \
@@ -78,10 +77,6 @@ WORKDIR /home/node
 # Tell Puppeteer to skip installing Chrome. We'll be using the installed package.
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
     PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
-
-# Set timezone
-RUN cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime &&\
-    apk del tzdata
 
 
 ##---------------##
@@ -100,7 +95,6 @@ RUN touch /home/node/.profile && \
     fi\n\
     fi\n\
     ' >> /home/node/.profile && \
-    #    go get -u github.com/justjanne/powerline-go && \
     touch /home/node/.bashrc && \
     echo 'PS1="\[\033[01;31m\]\u\[\033[00m\]@\h\[\033[00m\]:\[\033[01;36m\]\w\[\033[00m\]\[\e[0m\]\$ "' >> $HOME/.bashrc && \
     echo 'PS1="\[\033[01;33m\]\u\[\033[00m\]@\h\[\033[00m\]:\[\033[01;36m\]\w\[\033[00m\]\[\e[0m\]\$ "' >> $HOME/.bashrc
@@ -137,14 +131,9 @@ RUN touch /home/node/.profile && \
 #USER ${DOCKER_USER}
 
 
-
-# in case of production env
-# ENV NODE_ENV=development
-
 WORKDIR /home/node
 
-
-RUN sudo npm i -g gatsby-cli vue-cli create-react-app firebase-tools && \
+RUN sudo npm i -g create-react-app && \
     fc-cache -fv
 #RUN npm install --save-dev http-server \
 #    && npm install -g gatsby-cli
