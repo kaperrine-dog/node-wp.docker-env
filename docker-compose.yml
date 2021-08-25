@@ -9,6 +9,7 @@ services:
         shm_size: "2gb"
         volumes:
             - ./node/passwd-html2pdf:/home/node/passwd-html2pdf
+            - ./node/etc/fonts/local.conf/:/etc/fonts/local.conf
             #- ./php/src/${REPO_NAME}/httpdocs/react-app:/home/node/app/react-app
         ports:
             - ${NODE_LOCALPORT8000}:8000
