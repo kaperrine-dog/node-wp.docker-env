@@ -44,6 +44,7 @@ RUN sudo apk --update-cache --no-cache add shadow \
     # file \
     # udev \
     # for using puppeteer
+    qpdf \
     chromium \
     nss \
     freetype \
