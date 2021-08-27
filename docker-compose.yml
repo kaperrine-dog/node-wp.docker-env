@@ -8,14 +8,16 @@ services:
             shm_size: "1gb"
         shm_size: "2gb"
         volumes:
-            - ./node/passwd-html2pdf:/home/node/passwd-html2pdf
+            - ./node/${CONTAINER_NAME}:/home/node/${CONTAINER_NAME}
             - ./node/etc/fonts/local.conf/:/etc/fonts/local.conf
             #- ./php/src/${REPO_NAME}/httpdocs/react-app:/home/node/app/react-app
         ports:
             - ${NODE_LOCALPORT8000}:8000
             - ${NODE_LOCALPORT3000}:3000
-        command: ""
+        command: >
+            /bin/bash -c 'cd /home/node/${CONTAINER_NAME} && yarn && yarn pdf && tail -f /dev/null'
         stdin_open: true
+        tty: true
 
     # db:
     #   container_name: ${CONTAINER_NAME}_db
