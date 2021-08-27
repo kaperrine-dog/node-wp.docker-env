@@ -9,3 +9,4 @@ static/admin/*.bundle.*
 yarn-error.log
 **/node/app/*
 passwd-html2pdf
+passwd-gen
