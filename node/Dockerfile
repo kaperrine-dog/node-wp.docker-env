@@ -27,8 +27,8 @@ RUN sudo apk --update-cache --no-cache add shadow \
     curl \
     git \
     tzdata \
-    # gcc \
-    # g++ \
+    gcc \
+    g++ \
     bash \
     # dev
     # musl-dev \
